@@ -1,0 +1,72 @@
+<div class="row">
+  <div class = "column-2">
+    <ul class="cars">
+      <li *ngFor="let car of cars" (click)="onSelect(car)" [class.selected]="car === selectedCarF">
+        <button class="delete-button" (click)="deleteCar(car)">Delete</button>
+        <div>
+          <div class="badge"></div>
+          <div class="plate">{{car.license_plate}}</div>
+          <div class="name">{{car.name}}</div>
+        </div>
+      </li>
+    </ul>
+    <div class="editarea">
+      <button (click)="enableAddMode()">Add New Car</button>
+      <div *ngIf="selectedCar">
+        <div class="editfields">
+          <div>
+            <label>Plate: </label>
+            <input [(ngModel)]="selectedCar.license_plate" placeholder="id" *ngIf="addingCar" />
+            <label *ngIf="!addingCar" class="value">{{selectedCar.id}}</label>
+          </div>
+          <div>
+            <label>name: </label>
+            <input [(ngModel)]="selectedCar.name" placeholder="name" />
+          </div>
+        </div>
+        <button (click)="cancel()">Cancel</button>
+        <button (click)="saveCar()">Save</button>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div *ngIf="showCar" class = "column-2">
+    <div class = "row">
+      <div class = "column-2">
+        <div class="panelP">
+            <div class="panel-title">Panel P</div>
+            <button class="car-commands" (click)="turnEngineOn()">Turn On</button>
+            <button class="car-commands" (click)="turnEngineOff()">Turn Off</button>
+        </div>
+      </div>
+      <div class = "column-2">
+        <div class="row panelA">
+          <div class="column-2">
+            <div class="panel-title">Panel A</div>
+            <button class="car-commands" (click)="setlightsOff()">Lights Off</button>
+            <button class="car-commands" (click)="setNormalLigthsOn()">Normal Lights</button>
+            <button class="car-commands" (click)="setHighLightsOn()">High Lights</button>
+          </div>
+          <div class="column-2">
+            <button class="car-commands" (click)="turnRightSignOn()">Right Turn On</button>
+            <button class="car-commands" (click)="turnRightSignOff()">Right Turn Off</button>
+
+            <button class="car-commands" (click)="turnLeftSignOn()">Left Turn On</button>
+            <button class="car-commands" (click)="turnLeftSignOff()">Left Turn Off</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panelC">
+      <div class="grid-container">
+        <div [class.turnSignOn] = "selectedCarF.settings.left_signal === 1"></div>
+        <div [ngClass]="{'normalLights': selectedCarF.settings.lights === 1, 'highLights': selectedCarF.settings.lights === 2}"></div>
+        <div [class.turnSignOn] = "selectedCarF.settings.right_signal === 1"></div>
+      </div>
+
+      <div class="grid-container2">
+        <div [class.engineOn]="selectedCarF.engineStatus === statusOn">1</div>
+      </div>
+    </div>
+  </div>
+</div>
